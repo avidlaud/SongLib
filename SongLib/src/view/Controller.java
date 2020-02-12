@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
-
 public class Controller {
 
 	Stage mainStage;
@@ -30,4 +29,8 @@ public class Controller {
 	@FXML
 	private Button buttonDelete;
 	
+	public void setMainStage(Stage stage) {
+		mainStage = stage;
+	}
+
 }
