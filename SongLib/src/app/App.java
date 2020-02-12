@@ -18,10 +18,11 @@ public class App extends Application {
 		mainStage.setTitle("Song Library");
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("view/SongLib.fxml"));
+			loader.setLocation(getClass().getResource("/view/SongLib.fxml")); //
 			AnchorPane pane = (AnchorPane)loader.load();
 			
 			Controller controller = loader.getController();
+			controller.start();
 			controller.setMainStage(mainStage);
 			
 			Scene scene = new Scene(pane, 400, 300); 
@@ -30,5 +31,8 @@ public class App extends Application {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public static void main(String[] args) {
+		launch(args);
 	}
 }
