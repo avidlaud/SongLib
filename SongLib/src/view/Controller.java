@@ -1,8 +1,6 @@
 package view;
 
 import java.io.*;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.*;
 import javafx.beans.value.*;
 import javafx.scene.layout.Pane;
@@ -95,9 +93,9 @@ public class Controller {
 		mainStage = stage;
 	}
 	
-	public void start() {
+	public void start() throws IOException {
 		songList = FXCollections.observableArrayList();
-		filePath = "app/songList.txt";
+		filePath = "src\\app\\songList.txt";
 		try(BufferedReader fr = new BufferedReader(new FileReader(filePath))) { //populate songList from file
 			String line = fr.readLine();
 			while(line!=null) {
@@ -121,7 +119,13 @@ public class Controller {
 				selected = null;
 			}
 		} catch (IOException e) {
-			
+			File file = new File(filePath);
+			try(BufferedWriter fw = new BufferedWriter(new FileWriter(filePath,true))) {
+				fw.write("");
+			}
+			catch(IOException e2) {
+				throw new IOException("Song list file not found");
+			}
 		}
 		
 	}
