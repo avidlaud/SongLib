@@ -94,6 +94,22 @@ public class Controller {
 		}
 		return false;
 	}
+	public boolean edit(Song s, Song n) { //looks for s in the list and replaces it with n if it exists, returns false if s was not in the list already
+		if(songList == null || songList.isEmpty()) {
+			return false;
+		}
+		for(Song so : songList) {
+			if(so.getName().compareTo(s.getName())==0 && so.getArtist().compareTo(s.getArtist())==0) {
+				s.setName(n.getName());
+				s.setArtist(n.getArtist());
+				s.setAlbum(n.getAlbum());
+				s.setYear(n.getYear());
+				write();
+				return true;
+			}
+		}
+		return false;
+	}
 	private boolean read(Song s) { //search the file to see if a song exists, return true if it exists in the file already and updates it if necessary
 		if(songList == null || songList.isEmpty()) {
 			return false;
