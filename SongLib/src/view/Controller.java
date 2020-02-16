@@ -4,6 +4,7 @@ import java.io.*;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.*;
+import javafx.beans.value.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.*;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.*;
 import app.Song;
 
 public class Controller {
@@ -41,21 +43,47 @@ public class Controller {
 	private Button buttonDelete;
 	
 	@FXML
-	private TextArea name;
+	private Button Cancel;
 	
 	@FXML
-	private TextArea artist;
+	private Button addConfirm;
 	
 	@FXML
-	private TextArea album;
+	private Button editConfirm;
 	
 	@FXML
-	private TextArea year;
+	private Button deleteConfirm;
+	
+	@FXML
+	private TextArea addName;
+	
+	@FXML
+	private TextArea addArtist;
+	
+	@FXML
+	private TextArea addAlbum;
+	
+	@FXML
+	private TextArea addYear;
+	
+	@FXML
+	private TextArea editName;
+	
+	@FXML
+	private TextArea editArtist;
+	
+	@FXML
+	private TextArea editAlbum;
+	
+	@FXML
+	private TextArea editYear;
 	
 	@FXML
 	private ListView<Song> listView;
 	
 	private ObservableList<Song> songList;
+	
+	private Song selected;
 	
 	private String filePath;
 	
@@ -78,6 +106,14 @@ public class Controller {
 				Song s = new Song(data[0],data[2],data[3],Integer.parseInt(data[4]));
 				songList.add(s);
 				Collections.sort(songList);
+				listView = new ListView<Song>(songList);
+				listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
+					@Override
+					public void changed(ObservableValue<? extends Song> observable, Song oldVal, Song newVal) {
+						return;
+					}
+				});
+				selected = listView.getSelectionModel().getSelectedItem();
 			}
 		} catch (IOException e) {
 			
@@ -186,11 +222,21 @@ public class Controller {
 	}
 	@FXML
 	private void deleteScreen(ActionEvent e) { //we also need a submit buttons for these scenes, which will then call add/edit/delete
-		activate("deleteScene");
+		selected = listView.getSelectionModel().getSelectedItem();
+		if(selected!=null) {
+			activate("deleteScene");
+		}
 	}
 	@FXML
 	private void editScreen(ActionEvent e) {
-		activate("editScene");
+		selected = listView.getSelectionModel().getSelectedItem();
+		if(selected!=null) {
+			activate("editScene");
+			editName.setText(selected.getName());
+			editArtist.setText(selected.getArtist());
+			editAlbum.setText(selected.getAlbum());
+			editYear.setText(selected.getYear()+"");
+		}
 	}
 	@FXML
 	private void Cancel(ActionEvent e) {
@@ -198,16 +244,19 @@ public class Controller {
 	}
 	@FXML
 	private void addConfirm(ActionEvent e) {
-		Song s=new Song(name.getText(),artist.getText(),album.getText(),Integer.parseInt(year.getText()));
-		add(s);
+		Song s=new Song(addName.getText(),addArtist.getText(),addAlbum.getText(),Integer.parseInt(addYear.getText()));
+		add(s); 
 		activate("mainScene");
 	}
 	@FXML
 	private void deleteConfirm(ActionEvent e) {
-		
+		delete(selected);
+		activate("mainScene");
 	}
 	@FXML
 	private void editConfirm(ActionEvent e) {
-		
+		Song n=new Song(editName.getText(),editArtist.getText(),editAlbum.getText(),Integer.parseInt(editYear.getText()));
+		edit(selected,n);
+		activate("mainScene");
 	}
 }

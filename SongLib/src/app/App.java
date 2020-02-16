@@ -26,11 +26,11 @@ public class App extends Application {
 			controller.setMainStage(mainStage);
 			
 			Scene scene = new Scene(pane, 400, 300); 
-			controller.setScene(scene);
+			controller.setScene(scene); 
 			controller.addScreen("mainScene", FXMLLoader.load(getClass().getResource("/view/SongLib.fxml")));
-			controller.addScreen("addScene", FXMLLoader.load(getClass().getResource("/view/AddScene.fxml"))); //create new fxml files for these panes
-			controller.addScreen("deleteScene", FXMLLoader.load(getClass().getResource("/view/SongLib.fxml")));
-			controller.addScreen("editScene", FXMLLoader.load(getClass().getResource("/view/SongLib.fxml")));
+			controller.addScreen("addScene", FXMLLoader.load(getClass().getResource("/view/AddScene.fxml")));
+			controller.addScreen("deleteScene", FXMLLoader.load(getClass().getResource("/view/EditScene.fxml")));
+			controller.addScreen("editScene", FXMLLoader.load(getClass().getResource("/view/DeleteScene.fxml")));
 			controller.activate("mainScene");
 			mainStage.setScene(scene);
 			mainStage.show();
