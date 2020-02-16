@@ -105,15 +105,20 @@ public class Controller {
 				data = line.split("\t",4);
 				Song s = new Song(data[0],data[2],data[3],Integer.parseInt(data[4]));
 				songList.add(s);
-				Collections.sort(songList);
-				listView = new ListView<Song>(songList);
-				listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
-					@Override
-					public void changed(ObservableValue<? extends Song> observable, Song oldVal, Song newVal) {
-						return;
-					}
-				});
+			}
+			Collections.sort(songList);
+			listView = new ListView<Song>(songList);
+			listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
+				@Override
+				public void changed(ObservableValue<? extends Song> observable, Song oldVal, Song newVal) {
+					return;
+				}
+			});
+			if(!songList.isEmpty()) {
+				listView.getSelectionModel().select(0);
 				selected = listView.getSelectionModel().getSelectedItem();
+			} else {
+				selected = null;
 			}
 		} catch (IOException e) {
 			
@@ -132,20 +137,26 @@ public class Controller {
 	public void activate(String name) {
 		mainScene.setRoot(screenMap.get(name));
 	}
-	public void add(Song s) { //add a song to the list in alphabetical order by writing to the file 
+	public boolean add(Song s) { //add a song to the list in alphabetical order by writing to the file 
 		if(read(s)) {
-			return; //song already exists
+			return false; //song already exists
 		}
-		if(songList == null || songList.isEmpty()) {
-			return;
+		if(songList == null) {
+			return false;
+		}
+		if(s.getName()==null || s.getArtist()==null) {
+			return false;
 		}
 		songList.add(s); 
 		Collections.sort(songList);
 		try(BufferedWriter fw = new BufferedWriter(new FileWriter(filePath,true))) { //write to file
 			fw.write(s.toString()+"\n");
 		} catch (IOException e) {
-			
+			return false;
 		}
+		selected=s;
+		listView.getSelectionModel().select(songList.indexOf(s));
+		return true;
 	}
 	public boolean delete(Song s) { //removes target song from the songList, returns true if it exists and false if it wasnt in the list in the first place
 		if(songList == null || songList.isEmpty()) {
@@ -154,6 +165,20 @@ public class Controller {
 		int i=0;
 		for(Song so : songList) {
 			if(so.getName().compareTo(s.getName())==0 && so.getArtist().compareTo(s.getArtist())==0) {
+				if(i==0) {
+					if(songList.size()>1) {
+						listView.getSelectionModel().select(1);
+						selected=listView.getSelectionModel().getSelectedItem();
+					} else {
+						selected = null;
+					}
+				} else if(songList.size()==(i+1)) {
+					listView.getSelectionModel().select(i-1);
+					selected=listView.getSelectionModel().getSelectedItem();
+				} else {
+					listView.getSelectionModel().select(i+1);
+					selected=listView.getSelectionModel().getSelectedItem();
+				}
 				songList.remove(i);
 				write();
 				return true;
@@ -165,6 +190,9 @@ public class Controller {
 	public boolean edit(Song s, Song n) { //looks for s in the list and replaces it with n if it exists, returns false if s was not in the list already
 		if(songList == null || songList.isEmpty()) {
 			return false;
+		}
+		if(read(n)) {
+			return false; //can't make this edit because it will cause a conflict
 		}
 		for(Song so : songList) {
 			if(so.getName().compareTo(s.getName())==0 && so.getArtist().compareTo(s.getArtist())==0) {
@@ -178,24 +206,12 @@ public class Controller {
 		}
 		return false;
 	}
-	private boolean read(Song s) { //search the file to see if a song exists, return true if it exists in the file already and updates it if necessary
+	private boolean read(Song s) { //search the file to see if a song exists
 		if(songList == null || songList.isEmpty()) {
 			return false;
 		}
 		for(Song so : songList) {
 			if(so.getName().compareTo(s.getName())==0 && so.getArtist().compareTo(s.getArtist())==0) {
-				boolean b = false;
-				if(so.getAlbum().compareTo(s.getAlbum())!=0) {
-					so.setAlbum(s.getAlbum()); //update the album and year if needed
-					b=true;
-				}
-				if(so.getYear()!=s.getYear()) {
-					so.setAlbum(s.getAlbum()); 
-					b=true;
-				}
-				if(b) {
-					write();
-				}
 				return true;
 			}
 		}
