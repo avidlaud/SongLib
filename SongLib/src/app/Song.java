@@ -44,6 +44,10 @@ public class Song implements Comparable<Song>{
 		this.album = album;
 	}
 	
+	public void setYear(int year) {
+		this.year = year;
+	}
+	
 	public int compareTo(Song s) {
 		if(this.name.compareTo(s.getName()) > 0) {
 			return 1;
