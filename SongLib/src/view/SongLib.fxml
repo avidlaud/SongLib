@@ -23,9 +23,9 @@
                   <Label fx:id="labelArtist" layoutX="129.0" layoutY="101.0" text="Label" />
                   <Label fx:id="labelAlbum" layoutX="129.0" layoutY="145.0" text="Label" />
                   <Label fx:id="labelYear" layoutX="129.0" layoutY="191.0" text="Label" />
-                  <Button fx:id="buttonAdd" layoutX="36.0" layoutY="287.0" mnemonicParsing="false" text="Add" />
-                  <Button fx:id="buttonEdit" layoutX="117.0" layoutY="287.0" mnemonicParsing="false" text="Edit" />
-                  <Button fx:id="buttonDelete" layoutX="202.0" layoutY="287.0" mnemonicParsing="false" text="Delete" />
+                  <Button fx:id="buttonAdd" onAction="#addScreen" layoutX="36.0" layoutY="287.0" mnemonicParsing="false" text="Add" />
+                  <Button fx:id="buttonEdit" onAction="#deleteScreen" layoutX="117.0" layoutY="287.0" mnemonicParsing="false" text="Edit" />
+                  <Button fx:id="buttonDelete" onAction="#editScreen" layoutX="202.0" layoutY="287.0" mnemonicParsing="false" text="Delete" />
                </children>
             </AnchorPane>
         </items>

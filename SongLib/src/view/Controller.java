@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Collections;
 import javafx.fxml.FXML;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
@@ -82,7 +83,7 @@ public class Controller {
 	public boolean delete(Song s) { //removes target song from the songList, returns true if it exists and false if it wasnt in the list in the first place
 		if(songList == null || songList.isEmpty()) {
 			return false;
-		}
+		} 
 		int i=0;
 		for(Song so : songList) {
 			if(so.getName().compareTo(s.getName())==0 && so.getArtist().compareTo(s.getArtist())==0) {
@@ -147,5 +148,17 @@ public class Controller {
 		} catch (IOException e) {
 			
 		}
+	}
+	@FXML
+	private void addScreen(ActionEvent e) {
+		
+	}
+	@FXML
+	private void deleteScreen(ActionEvent e) {
+		
+	}
+	@FXML
+	private void editScreen(ActionEvent e) {
+		
 	}
 }
