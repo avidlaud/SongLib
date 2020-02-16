@@ -3,6 +3,9 @@ package view;
 import java.io.*;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.*;
 import java.util.Collections;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -38,24 +41,40 @@ public class Controller {
 	private Button buttonDelete;
 	
 	@FXML
+	private TextArea name;
+	
+	@FXML
+	private TextArea artist;
+	
+	@FXML
+	private TextArea album;
+	
+	@FXML
+	private TextArea year;
+	
+	@FXML
 	private ListView<Song> listView;
 	
 	private ObservableList<Song> songList;
 	
 	private String filePath;
 	
+	private HashMap<String, Pane> screenMap = new HashMap<>();
+	
+	private Scene mainScene;
+	
 	public void setMainStage(Stage stage) {
 		mainStage = stage;
 	}
 	
 	public void start() {
-		songList = FXCollections.observableArrayList();//
+		songList = FXCollections.observableArrayList();
 		filePath = "app/songList.txt";
 		try(BufferedReader fr = new BufferedReader(new FileReader(filePath))) { //populate songList from file
 			String line = fr.readLine();
 			while(line!=null) {
 				String[] data = new String[4];
-				data = line.split(" ",4);
+				data = line.split("\t",4);
 				Song s = new Song(data[0],data[2],data[3],Integer.parseInt(data[4]));
 				songList.add(s);
 				Collections.sort(songList);
@@ -64,6 +83,18 @@ public class Controller {
 			
 		}
 		
+	}
+	public void setScene(Scene scene) {
+		mainScene=scene;
+	}
+	public void addScreen(String name, Pane pane) {
+		screenMap.put(name,pane);
+	}
+	public void removeScreen(String name) {
+		screenMap.remove(name);
+	}
+	public void activate(String name) {
+		mainScene.setRoot(screenMap.get(name));
 	}
 	public void add(Song s) { //add a song to the list in alphabetical order by writing to the file 
 		if(read(s)) {
@@ -150,15 +181,33 @@ public class Controller {
 		}
 	}
 	@FXML
-	private void addScreen(ActionEvent e) {
-		
+	private void addScreen(ActionEvent e) { //should transition to a new scene when the add button is clicked
+		activate("addScene");
 	}
 	@FXML
-	private void deleteScreen(ActionEvent e) {
-		
+	private void deleteScreen(ActionEvent e) { //we also need a submit buttons for these scenes, which will then call add/edit/delete
+		activate("deleteScene");
 	}
 	@FXML
 	private void editScreen(ActionEvent e) {
+		activate("editScene");
+	}
+	@FXML
+	private void Cancel(ActionEvent e) {
+		activate("mainScene");
+	}
+	@FXML
+	private void addConfirm(ActionEvent e) {
+		Song s=new Song(name.getText(),artist.getText(),album.getText(),Integer.parseInt(year.getText()));
+		add(s);
+		activate("mainScene");
+	}
+	@FXML
+	private void deleteConfirm(ActionEvent e) {
+		
+	}
+	@FXML
+	private void editConfirm(ActionEvent e) {
 		
 	}
 }
