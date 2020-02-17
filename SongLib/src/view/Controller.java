@@ -97,15 +97,15 @@ public class Controller {
 		songList = FXCollections.observableArrayList();
 		filePath = "src\\app\\songList.txt";
 		try(BufferedReader fr = new BufferedReader(new FileReader(filePath))) { //populate songList from file
-			String line = fr.readLine();
-			while(line!=null) {
+			String line;
+			while((line = fr.readLine()) != null) {
 				String[] data = new String[4];
 				data = line.split("\t",4);
-				Song s = new Song(data[0],data[2],data[3],Integer.parseInt(data[4]));
+				Song s = new Song(data[0],data[1],data[2],Integer.parseInt(data[3]));
 				songList.add(s);
 			}
 			Collections.sort(songList);
-			listView = new ListView<Song>(songList);
+			listView.setItems(songList);
 			listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
 				@Override
 				public void changed(ObservableValue<? extends Song> observable, Song oldVal, Song newVal) {
@@ -139,7 +139,8 @@ public class Controller {
 		screenMap.remove(name);
 	}
 	public void activate(String name) {
-		mainScene.setRoot(screenMap.get(name));
+		System.out.println(screenMap.get(name));
+		//mainScene.setRoot(screenMap.get(name));
 	}
 	public boolean add(Song s) { //add a song to the list in alphabetical order by writing to the file 
 		if(read(s)) {
@@ -238,6 +239,7 @@ public class Controller {
 	}
 	@FXML
 	private void addScreen(ActionEvent e) { //should transition to a new scene when the add button is clicked
+		add(new Song("Name1", "Artist1", "Album1", 2020));
 		activate("addScene");
 	}
 	@FXML

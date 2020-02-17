@@ -26,7 +26,7 @@ public class App extends Application {
 			controller.setMainStage(mainStage);
 			
 			Scene scene = new Scene(pane, 600, 500); 
-			controller.setScene(scene); 
+			controller.setScene(scene);
 			controller.addScreen("mainScene", FXMLLoader.load(getClass().getResource("/view/SongLib.fxml")));
 			controller.addScreen("addScene", FXMLLoader.load(getClass().getResource("/view/AddScene.fxml")));
 			controller.addScreen("deleteScene", FXMLLoader.load(getClass().getResource("/view/EditScene.fxml")));
