@@ -142,6 +142,11 @@ public class Controller {
 		System.out.println(screenMap.get(name));
 		//mainScene.setRoot(screenMap.get(name));
 	}
+	
+	public void activateStage(String name, Stage stage) {
+		stage.setScene(new Scene(screenMap.get(name), 600, 500));
+	}
+	
 	public boolean add(Song s) { //add a song to the list in alphabetical order by writing to the file 
 		if(read(s)) {
 			return false; //song already exists
@@ -240,20 +245,20 @@ public class Controller {
 	@FXML
 	private void addScreen(ActionEvent e) { //should transition to a new scene when the add button is clicked
 		add(new Song("Name1", "Artist1", "Album1", 2020));
-		activate("addScene");
+		activateStage("addScene", mainStage);
 	}
 	@FXML
 	private void deleteScreen(ActionEvent e) { //we also need a submit buttons for these scenes, which will then call add/edit/delete
 		selected = listView.getSelectionModel().getSelectedItem();
 		if(selected!=null) {
-			activate("deleteScene");
+			activateStage("deleteScene", mainStage);
 		}
 	}
 	@FXML
 	private void editScreen(ActionEvent e) {
 		selected = listView.getSelectionModel().getSelectedItem();
 		if(selected!=null) {
-			activate("editScene");
+			activateStage("editScene", mainStage);
 			editName.setText(selected.getName());
 			editArtist.setText(selected.getArtist());
 			editAlbum.setText(selected.getAlbum());
@@ -262,23 +267,23 @@ public class Controller {
 	}
 	@FXML
 	private void Cancel(ActionEvent e) {
-		activate("mainScene");
+		activateStage("mainScene", mainStage);
 	}
 	@FXML
 	private void addConfirm(ActionEvent e) {
 		Song s=new Song(addName.getText(),addArtist.getText(),addAlbum.getText(),Integer.parseInt(addYear.getText()));
 		add(s); 
-		activate("mainScene");
+		activateStage("mainScene", mainStage);
 	}
 	@FXML
 	private void deleteConfirm(ActionEvent e) {
 		delete(selected);
-		activate("mainScene");
+		activateStage("mainScene", mainStage);
 	}
 	@FXML
 	private void editConfirm(ActionEvent e) {
 		Song n=new Song(editName.getText(),editArtist.getText(),editAlbum.getText(),Integer.parseInt(editYear.getText()));
 		edit(selected,n);
-		activate("mainScene");
+		activateStage("mainScene", mainStage);
 	}
 }

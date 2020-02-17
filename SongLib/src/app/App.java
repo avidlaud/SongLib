@@ -31,7 +31,8 @@ public class App extends Application {
 			controller.addScreen("addScene", FXMLLoader.load(getClass().getResource("/view/AddScene.fxml")));
 			controller.addScreen("deleteScene", FXMLLoader.load(getClass().getResource("/view/EditScene.fxml")));
 			controller.addScreen("editScene", FXMLLoader.load(getClass().getResource("/view/DeleteScene.fxml")));
-			controller.activate("mainScene");
+			//controller.activate("mainScene");
+			controller.activateStage("mainScene", mainStage);
 			mainStage.setScene(scene);
 			mainStage.show();
 		} catch(IOException e) {
