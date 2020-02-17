@@ -85,7 +85,7 @@ public class Controller {
 	
 	private String filePath;
 	
-	private HashMap<String, Pane> screenMap = new HashMap<>();
+	private HashMap<String, Scene> screenMap = new HashMap<>();
 	
 	private Scene mainScene;
 	
@@ -133,7 +133,7 @@ public class Controller {
 		mainScene=scene;
 	}
 	public void addScreen(String name, Pane pane) {
-		screenMap.put(name,pane);
+		screenMap.put(name,new Scene(pane, 600, 500));
 	}
 	public void removeScreen(String name) {
 		screenMap.remove(name);
@@ -144,7 +144,7 @@ public class Controller {
 	}
 	
 	public void activateStage(String name, Stage stage) {
-		stage.setScene(new Scene(screenMap.get(name), 600, 500));
+		stage.setScene(screenMap.get(name));
 	}
 	
 	public boolean add(Song s) { //add a song to the list in alphabetical order by writing to the file 
