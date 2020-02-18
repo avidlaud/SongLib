@@ -78,6 +78,8 @@ public class Controller {
 	
 	private Scene mainScene;
 	
+	private Song editSong;
+	
 	public void setMainStage(Stage stage) {
 		mainStage = stage;
 	}
@@ -239,21 +241,18 @@ public class Controller {
 		if(songList == null || songList.isEmpty()) {
 			return false;
 		}
+		songList.remove(s); //Delete the current selected song - will insert it again after
 		if(read(n)) {
 			errorPop();
+			songList.add(s); //Add song back
+			Collections.sort(songList);
+			write();
 			return false; //can't make this edit because it will cause a conflict
 		}
-		for(Song so : songList) {
-			if(so.compareTo(s)==0) {
-				so.setName(n.getName());
-				so.setArtist(n.getArtist());
-				so.setAlbum(n.getAlbum());
-				so.setYear(n.getYear());
-				write();
-				return true;
-			}
-		}
-		return false;
+		songList.add(n);
+		Collections.sort(songList);
+		write();
+		return true;
 	}
 	private boolean read(Song s) { //search the file to see if a song exists
 		if(songList == null || songList.isEmpty()) {
@@ -313,6 +312,7 @@ public class Controller {
 	@FXML
 	private void editScreen(ActionEvent e) {
 		selected = listView.getSelectionModel().getSelectedItem();
+		editSong = selected; //Sets the currently selected song for use in edit()
 		if(selected!=null) {
 			activate("editScene");
 			textFieldName.setText(selected.getName());
@@ -339,7 +339,7 @@ public class Controller {
 	@FXML
 	private void editConfirm(ActionEvent e) {
 		Song n=new Song(textFieldName.getText(), textFieldArtist.getText(), textFieldAlbum.getText(),Integer.parseInt(textFieldYear.getText()));
-		edit(selected,n);
+		edit(editSong,n);
 		activate("mainScene");
 	}
 	private void errorPop() { //creates a pop up window to display an error message
