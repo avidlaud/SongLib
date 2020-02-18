@@ -4,12 +4,14 @@ import java.io.*;
 import java.util.*;
 import javafx.beans.value.*;
 import javafx.scene.layout.Pane;
+import javafx.geometry.Pos;
 import javafx.scene.*;
 import java.util.Collections;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.*;
@@ -117,7 +119,6 @@ public class Controller {
 				throw new IOException("Song list file not found");
 			}
 		}
-		
 	}
 	public void setScene(Scene scene) {
 		mainScene=scene;
@@ -183,6 +184,7 @@ public class Controller {
 	}
 	public boolean add(Song s) { //add a song to the list in alphabetical order by writing to the file 
 		if(read(s)) {
+			errorPop();
 			return false; //song already exists
 		}
 		if(songList == null) {
@@ -236,6 +238,7 @@ public class Controller {
 			return false;
 		}
 		if(read(n)) {
+			errorPop();
 			return false; //can't make this edit because it will cause a conflict
 		}
 		for(Song so : songList) {
@@ -336,5 +339,18 @@ public class Controller {
 		Song n=new Song(textFieldName.getText(), textFieldArtist.getText(), textFieldAlbum.getText(),Integer.parseInt(textFieldYear.getText()));
 		edit(selected,n);
 		activate("mainScene");
+	}
+	private void errorPop() { //creates a pop up window to display an error message
+		Stage popup = new Stage();
+		popup.initModality(Modality.APPLICATION_MODAL);
+		popup.SetTitle("Error");
+		Label lab = new Label("The name and artist of the song you are attempting to create already exist in the list.");
+		Button but = new Button("Close");
+		but.setOnAction(e->popup.close());
+		VBox layout = new VBox(10);
+		layout.getChildren().addAll(lab,but);
+		layout.setAlignment(Pos.Center);
+		popup.setScene(mainScene);
+		popup.showAndWait();
 	}
 }
