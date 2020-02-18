@@ -284,6 +284,10 @@ public class Controller {
 	@FXML
 	private void addScreen(ActionEvent e) { //should transition to a new scene when the add button is clicked
 		add(new Song("Name1", "Artist1", "Album1", 2020));
+		textFieldName.setText("");
+		textFieldArtist.setText("");
+		textFieldAlbum.setText("");
+		textFieldYear.setText("");
 		activate("addScene");
 	}
 	@FXML
