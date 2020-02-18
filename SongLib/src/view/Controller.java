@@ -102,15 +102,6 @@ public class Controller {
 				}
 			});
 			
-			//Set button and field visibility
-			textFieldName.setVisible(false);
-			textFieldArtist.setVisible(false);
-			textFieldAlbum.setVisible(false);
-			textFieldYear.setVisible(false);
-			buttonConfirmAdd.setVisible(false);
-			buttonConfirmEdit.setVisible(false);
-			
-
 			if(!songList.isEmpty()) {
 				listView.getSelectionModel().select(0);
 				selected = listView.getSelectionModel().getSelectedItem();
