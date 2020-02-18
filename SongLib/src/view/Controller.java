@@ -239,7 +239,7 @@ public class Controller {
 			return false; //can't make this edit because it will cause a conflict
 		}
 		for(Song so : songList) {
-			if(so.getName().compareTo(s.getName())==0 && so.getArtist().compareTo(s.getArtist())==0) {
+			if(so.compareTo(s)==0) {
 				so.setName(n.getName());
 				so.setArtist(n.getArtist());
 				so.setAlbum(n.getAlbum());
@@ -255,13 +255,13 @@ public class Controller {
 			return false;
 		}
 		for(Song so : songList) {
-			if(so.getName().compareTo(s.getName())==0 && so.getArtist().compareTo(s.getArtist())==0) {
+			if(so.compareTo(s)==0) {
 				return true;
 			}
 		}
 		return false;
 	}
-	private void write() { //deletes the current file and creates a new one of the same name that is re-populated with data from the songList
+	/*private void write() { //deletes the current file and creates a new one of the same name that is re-populated with data from the songList
 		File curList = new File(filePath);
 		curList.delete();
 		File file = new File(filePath);
@@ -272,6 +272,19 @@ public class Controller {
 			for(Song s : songList) {
 				fw.write(s.toString()+"\n");
 			}
+		} catch (IOException e) {
+			
+		}
+	}*/
+	private void write() {
+		if(songList==null || songList.isEmpty()) {
+			return;
+		}
+		try(BufferedWriter fw = new BufferedWriter(new FileWriter(filePath))) { //write to file
+			for(Song s : songList) {
+				fw.write(s.toString()+"\n");
+			}
+			fw.write("\n");
 		} catch (IOException e) {
 			
 		}
