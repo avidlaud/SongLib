@@ -94,6 +94,10 @@ public class Controller {
 			listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
 				@Override
 				public void changed(ObservableValue<? extends Song> observable, Song oldVal, Song newVal) {
+					labelName.setText(listView.getSelectionModel().getSelectedItem().getName());
+					labelArtist.setText(listView.getSelectionModel().getSelectedItem().getArtist());
+					labelAlbum.setText(listView.getSelectionModel().getSelectedItem().getAlbum());
+					labelYear.setText(Integer.toString(listView.getSelectionModel().getSelectedItem().getYear()));
 					return;
 				}
 			});
@@ -245,10 +249,10 @@ public class Controller {
 		}
 		for(Song so : songList) {
 			if(so.getName().compareTo(s.getName())==0 && so.getArtist().compareTo(s.getArtist())==0) {
-				s.setName(n.getName());
-				s.setArtist(n.getArtist());
-				s.setAlbum(n.getAlbum());
-				s.setYear(n.getYear());
+				so.setName(n.getName());
+				so.setArtist(n.getArtist());
+				so.setAlbum(n.getAlbum());
+				so.setYear(n.getYear());
 				write();
 				return true;
 			}

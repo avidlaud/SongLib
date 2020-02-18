@@ -30,7 +30,7 @@
                   <TextField fx:id="textFieldAlbum" layoutX="74.0" layoutY="141.0" />
                   <TextField fx:id="textFieldYear" layoutX="74.0" layoutY="187.0" />
                   <Button fx:id="buttonConfirmAdd" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#addConfirm" text="Confirm" />
-                  <Button fx:id="buttonConfirmEdit" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#addConfirm" text="Confirm" />
+                  <Button fx:id="buttonConfirmEdit" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#editConfirm" text="Confirm" />
                   <Button fx:id="buttonCancel" layoutX="157.0" layoutY="287.0" mnemonicParsing="false" onAction="#Cancel" text="Cancel" />
                </children>
             </AnchorPane>
