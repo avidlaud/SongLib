@@ -39,42 +39,27 @@ public class Controller {
 	
 	@FXML
 	private Button buttonDelete;
+
+	@FXML
+	private TextField textFieldName;
 	
 	@FXML
-	private Button Cancel;
+	private TextField textFieldArtist;
 	
 	@FXML
-	private Button addConfirm;
+	private TextField textFieldAlbum;
 	
 	@FXML
-	private Button editConfirm;
+	private TextField textFieldYear;
 	
 	@FXML
-	private Button deleteConfirm;
+	private Button buttonConfirmAdd;
 	
 	@FXML
-	private TextArea addName;
+	private Button buttonConfirmEdit;
 	
 	@FXML
-	private TextArea addArtist;
-	
-	@FXML
-	private TextArea addAlbum;
-	
-	@FXML
-	private TextArea addYear;
-	
-	@FXML
-	private TextArea editName;
-	
-	@FXML
-	private TextArea editArtist;
-	
-	@FXML
-	private TextArea editAlbum;
-	
-	@FXML
-	private TextArea editYear;
+	private Button buttonCancel;
 	
 	@FXML
 	private ListView<Song> listView;
@@ -112,6 +97,16 @@ public class Controller {
 					return;
 				}
 			});
+			
+			//Set button and field visibility
+			textFieldName.setVisible(false);
+			textFieldArtist.setVisible(false);
+			textFieldAlbum.setVisible(false);
+			textFieldYear.setVisible(false);
+			buttonConfirmAdd.setVisible(false);
+			buttonConfirmEdit.setVisible(false);
+			
+
 			if(!songList.isEmpty()) {
 				listView.getSelectionModel().select(0);
 				selected = listView.getSelectionModel().getSelectedItem();
@@ -141,6 +136,55 @@ public class Controller {
 	public void activate(String name) {
 		System.out.println(screenMap.get(name));
 		//mainScene.setRoot(screenMap.get(name));
+		switch(name) {
+			case "addScene":
+				labelName.setVisible(false);
+				labelArtist.setVisible(false);
+				labelAlbum.setVisible(false);
+				labelYear.setVisible(false);
+				buttonAdd.setVisible(false);
+				buttonEdit.setVisible(false);
+				buttonDelete.setVisible(false);
+				textFieldName.setVisible(true);
+				textFieldArtist.setVisible(true);
+				textFieldAlbum.setVisible(true);
+				textFieldYear.setVisible(true);
+				buttonConfirmAdd.setVisible(true);
+				buttonConfirmEdit.setVisible(false);
+				buttonCancel.setVisible(true);
+				break;
+			case "editScene":
+				labelName.setVisible(false);
+				labelArtist.setVisible(false);
+				labelAlbum.setVisible(false);
+				labelYear.setVisible(false);
+				buttonAdd.setVisible(true);
+				buttonEdit.setVisible(true);
+				buttonDelete.setVisible(true);
+				textFieldName.setVisible(true);
+				textFieldArtist.setVisible(true);
+				textFieldAlbum.setVisible(true);
+				textFieldYear.setVisible(true);
+				buttonConfirmAdd.setVisible(false);
+				buttonConfirmEdit.setVisible(true);
+				buttonCancel.setVisible(true);
+				break;
+			default:
+				labelName.setVisible(true);
+				labelArtist.setVisible(true);
+				labelAlbum.setVisible(true);
+				labelYear.setVisible(true);
+				buttonAdd.setVisible(true);
+				buttonEdit.setVisible(true);
+				buttonDelete.setVisible(true);
+				textFieldName.setVisible(false);
+				textFieldArtist.setVisible(false);
+				textFieldAlbum.setVisible(false);
+				textFieldYear.setVisible(false);
+				buttonConfirmAdd.setVisible(false);
+				buttonConfirmEdit.setVisible(false);
+				buttonCancel.setVisible(false);
+		}
 	}
 	public boolean add(Song s) { //add a song to the list in alphabetical order by writing to the file 
 		if(read(s)) {
@@ -254,10 +298,10 @@ public class Controller {
 		selected = listView.getSelectionModel().getSelectedItem();
 		if(selected!=null) {
 			activate("editScene");
-			editName.setText(selected.getName());
-			editArtist.setText(selected.getArtist());
-			editAlbum.setText(selected.getAlbum());
-			editYear.setText(selected.getYear()+"");
+			textFieldName.setText(selected.getName());
+			textFieldArtist.setText(selected.getArtist());
+			textFieldAlbum.setText(selected.getAlbum());
+			textFieldYear.setText(selected.getYear()+"");
 		}
 	}
 	@FXML
@@ -266,7 +310,7 @@ public class Controller {
 	}
 	@FXML
 	private void addConfirm(ActionEvent e) {
-		Song s=new Song(addName.getText(),addArtist.getText(),addAlbum.getText(),Integer.parseInt(addYear.getText()));
+		Song s=new Song(textFieldName.getText(), textFieldArtist.getText(), textFieldAlbum.getText(), Integer.parseInt(textFieldYear.getText()));
 		add(s); 
 		activate("mainScene");
 	}
@@ -277,7 +321,7 @@ public class Controller {
 	}
 	@FXML
 	private void editConfirm(ActionEvent e) {
-		Song n=new Song(editName.getText(),editArtist.getText(),editAlbum.getText(),Integer.parseInt(editYear.getText()));
+		Song n=new Song(textFieldName.getText(), textFieldArtist.getText(), textFieldAlbum.getText(),Integer.parseInt(textFieldYear.getText()));
 		edit(selected,n);
 		activate("mainScene");
 	}
