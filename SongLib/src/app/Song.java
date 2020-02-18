@@ -61,7 +61,8 @@ public class Song implements Comparable<Song>{
 		return (this.artist.compareTo(s.getArtist()) > 0) ? 1:-1;	
 	}
 	public String toString() {
-		String s = name+"\t"+artist+"\t"+album+"\t"+year;
+		//String s = name+"\t"+artist+"\t"+album+"\t"+year;
+		String s = name + "-" + artist;
 		return s;
 	}
 }

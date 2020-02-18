@@ -4,12 +4,16 @@ import java.io.*;
 import java.util.*;
 import javafx.beans.value.*;
 import javafx.scene.layout.Pane;
+import javafx.geometry.Pos;
 import javafx.scene.*;
 import java.util.Collections;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.*;
@@ -39,42 +43,27 @@ public class Controller {
 	
 	@FXML
 	private Button buttonDelete;
+
+	@FXML
+	private TextField textFieldName;
 	
 	@FXML
-	private Button Cancel;
+	private TextField textFieldArtist;
 	
 	@FXML
-	private Button addConfirm;
+	private TextField textFieldAlbum;
 	
 	@FXML
-	private Button editConfirm;
+	private TextField textFieldYear;
 	
 	@FXML
-	private Button deleteConfirm;
+	private Button buttonConfirmAdd;
 	
 	@FXML
-	private TextArea addName;
+	private Button buttonConfirmEdit;
 	
 	@FXML
-	private TextArea addArtist;
-	
-	@FXML
-	private TextArea addAlbum;
-	
-	@FXML
-	private TextArea addYear;
-	
-	@FXML
-	private TextArea editName;
-	
-	@FXML
-	private TextArea editArtist;
-	
-	@FXML
-	private TextArea editAlbum;
-	
-	@FXML
-	private TextArea editYear;
+	private Button buttonCancel;
 	
 	@FXML
 	private ListView<Song> listView;
@@ -83,11 +72,13 @@ public class Controller {
 	
 	private Song selected;
 	
-	private String filePath;
+	private String filePath; 
 	
 	private HashMap<String, Pane> screenMap = new HashMap<>();
 	
 	private Scene mainScene;
+	
+	private Song editSong;
 	
 	public void setMainStage(Stage stage) {
 		mainStage = stage;
@@ -109,9 +100,14 @@ public class Controller {
 			listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
 				@Override
 				public void changed(ObservableValue<? extends Song> observable, Song oldVal, Song newVal) {
+					labelName.setText(listView.getSelectionModel().getSelectedItem().getName());
+					labelArtist.setText(listView.getSelectionModel().getSelectedItem().getArtist());
+					labelAlbum.setText(listView.getSelectionModel().getSelectedItem().getAlbum());
+					labelYear.setText(Integer.toString(listView.getSelectionModel().getSelectedItem().getYear()));
 					return;
 				}
 			});
+			
 			if(!songList.isEmpty()) {
 				listView.getSelectionModel().select(0);
 				selected = listView.getSelectionModel().getSelectedItem();
@@ -127,7 +123,6 @@ public class Controller {
 				throw new IOException("Song list file not found");
 			}
 		}
-		
 	}
 	public void setScene(Scene scene) {
 		mainScene=scene;
@@ -141,9 +136,59 @@ public class Controller {
 	public void activate(String name) {
 		System.out.println(screenMap.get(name));
 		//mainScene.setRoot(screenMap.get(name));
+		switch(name) {
+			case "addScene":
+				labelName.setVisible(false);
+				labelArtist.setVisible(false);
+				labelAlbum.setVisible(false);
+				labelYear.setVisible(false);
+				buttonAdd.setVisible(false);
+				buttonEdit.setVisible(false);
+				buttonDelete.setVisible(false);
+				textFieldName.setVisible(true);
+				textFieldArtist.setVisible(true);
+				textFieldAlbum.setVisible(true);
+				textFieldYear.setVisible(true);
+				buttonConfirmAdd.setVisible(true);
+				buttonConfirmEdit.setVisible(false);
+				buttonCancel.setVisible(true);
+				break;
+			case "editScene":
+				labelName.setVisible(false);
+				labelArtist.setVisible(false);
+				labelAlbum.setVisible(false);
+				labelYear.setVisible(false);
+				buttonAdd.setVisible(true);
+				buttonEdit.setVisible(true);
+				buttonDelete.setVisible(true);
+				textFieldName.setVisible(true);
+				textFieldArtist.setVisible(true);
+				textFieldAlbum.setVisible(true);
+				textFieldYear.setVisible(true);
+				buttonConfirmAdd.setVisible(false);
+				buttonConfirmEdit.setVisible(true);
+				buttonCancel.setVisible(true);
+				break;
+			default:
+				labelName.setVisible(true);
+				labelArtist.setVisible(true);
+				labelAlbum.setVisible(true);
+				labelYear.setVisible(true);
+				buttonAdd.setVisible(true);
+				buttonEdit.setVisible(true);
+				buttonDelete.setVisible(true);
+				textFieldName.setVisible(false);
+				textFieldArtist.setVisible(false);
+				textFieldAlbum.setVisible(false);
+				textFieldYear.setVisible(false);
+				buttonConfirmAdd.setVisible(false);
+				buttonConfirmEdit.setVisible(false);
+				buttonCancel.setVisible(false);
+		}
 	}
 	public boolean add(Song s) { //add a song to the list in alphabetical order by writing to the file 
 		if(read(s)) {
+			errorPop();
 			return false; //song already exists
 		}
 		if(songList == null) {
@@ -196,33 +241,31 @@ public class Controller {
 		if(songList == null || songList.isEmpty()) {
 			return false;
 		}
+		songList.remove(s); //Delete the current selected song - will insert it again after
 		if(read(n)) {
+			errorPop();
+			songList.add(s); //Add song back
+			Collections.sort(songList);
+			write();
 			return false; //can't make this edit because it will cause a conflict
 		}
-		for(Song so : songList) {
-			if(so.getName().compareTo(s.getName())==0 && so.getArtist().compareTo(s.getArtist())==0) {
-				s.setName(n.getName());
-				s.setArtist(n.getArtist());
-				s.setAlbum(n.getAlbum());
-				s.setYear(n.getYear());
-				write();
-				return true;
-			}
-		}
-		return false;
+		songList.add(n);
+		Collections.sort(songList);
+		write();
+		return true;
 	}
 	private boolean read(Song s) { //search the file to see if a song exists
 		if(songList == null || songList.isEmpty()) {
 			return false;
 		}
 		for(Song so : songList) {
-			if(so.getName().compareTo(s.getName())==0 && so.getArtist().compareTo(s.getArtist())==0) {
+			if(so.compareTo(s)==0) {
 				return true;
 			}
 		}
 		return false;
 	}
-	private void write() { //deletes the current file and creates a new one of the same name that is re-populated with data from the songList
+	/*private void write() { //deletes the current file and creates a new one of the same name that is re-populated with data from the songList
 		File curList = new File(filePath);
 		curList.delete();
 		File file = new File(filePath);
@@ -236,10 +279,27 @@ public class Controller {
 		} catch (IOException e) {
 			
 		}
+	}*/
+	private void write() {
+		if(songList==null || songList.isEmpty()) {
+			return;
+		}
+		try(BufferedWriter fw = new BufferedWriter(new FileWriter(filePath))) { //write to file
+			for(Song s : songList) {
+				fw.write(s.toString()+"\n");
+			}
+			fw.write("\n");
+		} catch (IOException e) {
+			
+		}
 	}
 	@FXML
 	private void addScreen(ActionEvent e) { //should transition to a new scene when the add button is clicked
 		add(new Song("Name1", "Artist1", "Album1", 2020));
+		textFieldName.setText("");
+		textFieldArtist.setText("");
+		textFieldAlbum.setText("");
+		textFieldYear.setText("");
 		activate("addScene");
 	}
 	@FXML
@@ -252,12 +312,13 @@ public class Controller {
 	@FXML
 	private void editScreen(ActionEvent e) {
 		selected = listView.getSelectionModel().getSelectedItem();
+		editSong = selected; //Sets the currently selected song for use in edit()
 		if(selected!=null) {
 			activate("editScene");
-			editName.setText(selected.getName());
-			editArtist.setText(selected.getArtist());
-			editAlbum.setText(selected.getAlbum());
-			editYear.setText(selected.getYear()+"");
+			textFieldName.setText(selected.getName());
+			textFieldArtist.setText(selected.getArtist());
+			textFieldAlbum.setText(selected.getAlbum());
+			textFieldYear.setText(selected.getYear()+"");
 		}
 	}
 	@FXML
@@ -266,7 +327,7 @@ public class Controller {
 	}
 	@FXML
 	private void addConfirm(ActionEvent e) {
-		Song s=new Song(addName.getText(),addArtist.getText(),addAlbum.getText(),Integer.parseInt(addYear.getText()));
+		Song s=new Song(textFieldName.getText(), textFieldArtist.getText(), textFieldAlbum.getText(), Integer.parseInt(textFieldYear.getText()));
 		add(s); 
 		activate("mainScene");
 	}
@@ -277,8 +338,15 @@ public class Controller {
 	}
 	@FXML
 	private void editConfirm(ActionEvent e) {
-		Song n=new Song(editName.getText(),editArtist.getText(),editAlbum.getText(),Integer.parseInt(editYear.getText()));
-		edit(selected,n);
+		Song n=new Song(textFieldName.getText(), textFieldArtist.getText(), textFieldAlbum.getText(),Integer.parseInt(textFieldYear.getText()));
+		edit(editSong,n);
 		activate("mainScene");
+	}
+	private void errorPop() { //creates a pop up window to display an error message
+		Alert alert = new Alert(AlertType.ERROR, "The name and artist of the song you are attempting to create already exists in the library.", ButtonType.CLOSE);
+		alert.showAndWait();
+		if (alert.getResult() == ButtonType.CLOSE) {
+		    //Error handling
+		}
 	}
 }
