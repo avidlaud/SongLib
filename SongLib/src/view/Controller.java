@@ -9,8 +9,10 @@ import javafx.scene.*;
 import java.util.Collections;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -341,16 +343,10 @@ public class Controller {
 		activate("mainScene");
 	}
 	private void errorPop() { //creates a pop up window to display an error message
-		Stage popup = new Stage();
-		popup.initModality(Modality.APPLICATION_MODAL);
-		popup.SetTitle("Error");
-		Label lab = new Label("The name and artist of the song you are attempting to create already exist in the list.");
-		Button but = new Button("Close");
-		but.setOnAction(e->popup.close());
-		VBox layout = new VBox(10);
-		layout.getChildren().addAll(lab,but);
-		layout.setAlignment(Pos.Center);
-		popup.setScene(mainScene);
-		popup.showAndWait();
+		Alert alert = new Alert(AlertType.ERROR, "The name and artist of the song you are attempting to create already exists in the library.", ButtonType.CLOSE);
+		alert.showAndWait();
+		if (alert.getResult() == ButtonType.CLOSE) {
+		    //Error handling
+		}
 	}
 }
