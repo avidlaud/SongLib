@@ -68,7 +68,7 @@ public class Controller {
 	
 	private Song selected;
 	
-	private String filePath;
+	private String filePath; 
 	
 	private HashMap<String, Pane> screenMap = new HashMap<>();
 	
