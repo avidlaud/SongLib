@@ -1,2 +1,2 @@
-Name1	Artist1	Album1	2019
 Name2	Artist2	Album2	2020
+Name3	Artist3	null	null
