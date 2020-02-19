@@ -63,6 +63,9 @@ public class Controller {
 	private Button buttonConfirmEdit;
 	
 	@FXML
+	private Button buttonConfirmDelete;
+	
+	@FXML
 	private Button buttonCancel;
 	
 	@FXML
@@ -159,6 +162,7 @@ public class Controller {
 				textFieldYear.setVisible(true);
 				buttonConfirmAdd.setVisible(true);
 				buttonConfirmEdit.setVisible(false);
+				buttonConfirmDelete.setVisible(false);
 				buttonCancel.setVisible(true);
 				break;
 			case "editScene":
@@ -175,6 +179,24 @@ public class Controller {
 				textFieldYear.setVisible(true);
 				buttonConfirmAdd.setVisible(false);
 				buttonConfirmEdit.setVisible(true);
+				buttonConfirmDelete.setVisible(false);
+				buttonCancel.setVisible(true);
+				break;
+			case "deleteScene":
+				labelName.setVisible(true);
+				labelArtist.setVisible(true);
+				labelAlbum.setVisible(true);
+				labelYear.setVisible(true);
+				buttonAdd.setVisible(false);
+				buttonEdit.setVisible(false);
+				buttonDelete.setVisible(false);
+				textFieldName.setVisible(false);
+				textFieldArtist.setVisible(false);
+				textFieldAlbum.setVisible(false);
+				textFieldYear.setVisible(false);
+				buttonConfirmAdd.setVisible(false);
+				buttonConfirmEdit.setVisible(false);
+				buttonConfirmDelete.setVisible(true);
 				buttonCancel.setVisible(true);
 				break;
 			default:
@@ -191,6 +213,7 @@ public class Controller {
 				textFieldYear.setVisible(false);
 				buttonConfirmAdd.setVisible(false);
 				buttonConfirmEdit.setVisible(false);
+				buttonConfirmDelete.setVisible(false);
 				buttonCancel.setVisible(false);
 		}
 	}
