@@ -92,7 +92,15 @@ public class Controller {
 			while((line = fr.readLine()) != null) {
 				String[] data = new String[4];
 				data = line.split("\t",4);
-				Song s = new Song(data[0],data[1],data[2],Integer.parseInt(data[3]));
+				Song s = new Song();
+				s.setName(data[0]);
+				s.setArtist(data[1]);
+				if(data[2] != "") {
+					s.setAlbum(data[2]);
+				}
+				if(data[3] != "") {
+					s.setYear(Integer.parseInt(data[3]));
+				}
 				songList.add(s);
 			}
 			Collections.sort(songList);
@@ -158,9 +166,9 @@ public class Controller {
 				labelArtist.setVisible(false);
 				labelAlbum.setVisible(false);
 				labelYear.setVisible(false);
-				buttonAdd.setVisible(true);
-				buttonEdit.setVisible(true);
-				buttonDelete.setVisible(true);
+				buttonAdd.setVisible(false);
+				buttonEdit.setVisible(false);
+				buttonDelete.setVisible(false);
 				textFieldName.setVisible(true);
 				textFieldArtist.setVisible(true);
 				textFieldAlbum.setVisible(true);
