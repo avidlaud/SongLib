@@ -49,16 +49,16 @@ public class Song implements Comparable<Song>{
 	}
 	
 	public int compareTo(Song s) {
-		if(this.name.compareTo(s.getName()) > 0) {
+		if(this.name.toLowerCase().compareTo(s.getName().toLowerCase()) > 0) {
 			return 1;
 		}
-		else if(this.name.compareTo(s.getName()) < 0) {
+		else if(this.name.toLowerCase().compareTo(s.getName().toLowerCase()) < 0) {
 			return -1;
 		}
-		if(this.artist.compareTo(s.getArtist()) == 0) {
+		if(this.artist.toLowerCase().compareTo(s.getArtist().toLowerCase()) == 0) {
 			return 0;
 		}
-		return (this.artist.compareTo(s.getArtist()) > 0) ? 1:-1;	
+		return (this.artist.toLowerCase().compareTo(s.getArtist().toLowerCase()) > 0) ? 1:-1;	
 	}
 	public String toString() {
 		String s = name + "-" + artist;
