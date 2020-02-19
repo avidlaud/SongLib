@@ -289,8 +289,13 @@ public class Controller {
 			PrintWriter pw = new PrintWriter(file);
 			pw.print("");
 			pw.close();
-			for(Song s : songList) {
-				fw.write(s.toString()+"\n");
+			for(int i=0;i<songList.size();i++) {
+				Song s=songList.get(i);
+				if(i==(songList.size()-1)) {
+					fw.write(s.writeToFile());
+				} else {
+					fw.write(s.writeToFile()+"\n");
+				}
 			}
 		} catch (IOException e) {
 			
