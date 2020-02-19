@@ -218,7 +218,7 @@ public class Controller {
 		} 
 		int i=0;
 		for(Song so : songList) {
-			if(so.getName().compareTo(s.getName())==0 && so.getArtist().compareTo(s.getArtist())==0) {
+			if(so.compareTo(s)==0) {
 				if(i==0) {
 					if(songList.size()>1) {
 						listView.getSelectionModel().select(1);
