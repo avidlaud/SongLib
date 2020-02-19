@@ -99,7 +99,7 @@ public class Controller {
 					s.setAlbum(data[2]);
 				}
 				if(data[3] != "") {
-					s.setYear(Integer.parseInt(data[3]));
+					s.setYear(data[3]);
 				}
 				songList.add(s);
 			}
@@ -111,7 +111,7 @@ public class Controller {
 					labelName.setText(listView.getSelectionModel().getSelectedItem().getName());
 					labelArtist.setText(listView.getSelectionModel().getSelectedItem().getArtist());
 					labelAlbum.setText(listView.getSelectionModel().getSelectedItem().getAlbum());
-					labelYear.setText(Integer.toString(listView.getSelectionModel().getSelectedItem().getYear()));
+					labelYear.setText(listView.getSelectionModel().getSelectedItem().getYear());
 					return;
 				}
 			});
@@ -311,7 +311,6 @@ public class Controller {
 	}
 	@FXML
 	private void addScreen(ActionEvent e) { //should transition to a new scene when the add button is clicked
-		add(new Song("Name1", "Artist1", "Album1", 2020));
 		textFieldName.setText("");
 		textFieldArtist.setText("");
 		textFieldAlbum.setText("");
@@ -334,7 +333,7 @@ public class Controller {
 			textFieldName.setText(selected.getName());
 			textFieldArtist.setText(selected.getArtist());
 			textFieldAlbum.setText(selected.getAlbum());
-			textFieldYear.setText(selected.getYear()+"");
+			textFieldYear.setText(selected.getYear());
 		}
 	}
 	@FXML
@@ -343,9 +342,38 @@ public class Controller {
 	}
 	@FXML
 	private void addConfirm(ActionEvent e) {
-		Song s=new Song(textFieldName.getText(), textFieldArtist.getText(), textFieldAlbum.getText(), Integer.parseInt(textFieldYear.getText()));
+		Song s=new Song();
+		String t = textFieldName.getText();
+		if(t.compareTo("")==0) {
+			return;
+		}
+		s.setName(t);
+		t = textFieldArtist.getText();
+		if(t.compareTo("")==0) {
+			return;
+		}
+		s.setArtist(t);
+		t = textFieldAlbum.getText();
+		if(t.compareTo("")!=0) {
+			s.setAlbum(t);
+		}
+		t = textFieldYear.getText();
+		if(t.compareTo("")!=0 && isInt(t)) {
+			s.setYear(t);
+		}
 		add(s); 
 		activate("mainScene");
+	}
+	private boolean isInt(String s) {
+		if(s==null) {
+			return false;
+		}
+		for(int i=0;i<s.length();i++) {
+			if(!Character.isDigit(s.charAt(i))) {
+				return false;
+			}
+		}
+		return true;
 	}
 	@FXML
 	private void deleteConfirm(ActionEvent e) {
@@ -354,8 +382,26 @@ public class Controller {
 	}
 	@FXML
 	private void editConfirm(ActionEvent e) {
-		Song n=new Song(textFieldName.getText(), textFieldArtist.getText(), textFieldAlbum.getText(),Integer.parseInt(textFieldYear.getText()));
-		edit(editSong,n);
+		Song s=new Song();
+		String t = textFieldName.getText();
+		if(t.compareTo("")==0) {
+			return;
+		}
+		s.setName(t);
+		t = textFieldArtist.getText();
+		if(t.compareTo("")==0) {
+			return;
+		}
+		s.setArtist(t);
+		t = textFieldAlbum.getText();
+		if(t.compareTo("")!=0) {
+			s.setAlbum(t);
+		}
+		t = textFieldYear.getText();
+		if(t.compareTo("")!=0 && isInt(t)) {
+			s.setYear(t);
+		}
+		edit(editSong,s);
 		activate("mainScene");
 	}
 	private void errorPop() { //creates a pop up window to display an error message

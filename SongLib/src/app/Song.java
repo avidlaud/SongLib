@@ -5,9 +5,9 @@ public class Song implements Comparable<Song>{
 	private String name;
 	private String artist;
 	private String album;
-	private int year;
+	private String year;
 	
-	public Song(String name, String artist, String album, int year) {
+	public Song(String name, String artist, String album, String year) {
 		this.name = name;
 		this.artist = artist;
 		this.album = album;
@@ -28,7 +28,7 @@ public class Song implements Comparable<Song>{
 		return album;
 	}
 	
-	public int getYear() {
+	public String getYear() {
 		return year;
 	}
 	
@@ -44,7 +44,7 @@ public class Song implements Comparable<Song>{
 		this.album = album;
 	}
 	
-	public void setYear(int year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 	
