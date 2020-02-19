@@ -66,7 +66,11 @@ public class Song implements Comparable<Song>{
 	}
 	
 	public String writeToFile() {
-		String s = name+"\t"+artist+"\t"+album+"\t"+year;
+		String writeName = (name == null) ? "":name;
+		String writeArtist = (artist == null) ? "":artist;
+		String writeAlbum = (album == null) ? "":album;
+		String writeYear = (year == null) ? "":year;
+		String s = writeName+"\t"+writeArtist+"\t"+writeAlbum+"\t"+writeYear;
 		return s;
 	}
 }

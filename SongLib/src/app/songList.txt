@@ -1,2 +1,5 @@
+Name1	Artist1	Album1	2019
+Name1	Artist5	Album2	null
+Name1	Artist6		2019
 Name2	Artist2	Album2	2020
-Name3	Artist3	null	null
+Name3	Artist4	null	2109
