@@ -207,11 +207,7 @@ public class Controller {
 		}
 		songList.add(s); 
 		Collections.sort(songList);
-		try(BufferedWriter fw = new BufferedWriter(new FileWriter(filePath,true))) { //write to file
-			fw.write(s.toString()+"\n");
-		} catch (IOException e) {
-			return false;
-		}
+		write();
 		selected=s;
 		listView.getSelectionModel().select(songList.indexOf(s));
 		return true;
