@@ -291,7 +291,11 @@ public class Controller {
 			pw.close();
 			for(int i=0;i<songList.size();i++) {
 				Song s=songList.get(i);
-				fw.write(s.toString()+"\n");
+				if(i==(songList.size()-1)) {
+					fw.write(s.writeToFile());
+				} else {
+					fw.write(s.writeToFile()+"\n");
+				}
 			}
 		} catch (IOException e) {
 			
