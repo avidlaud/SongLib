@@ -285,10 +285,13 @@ public class Controller {
 			return;
 		}
 		try(BufferedWriter fw = new BufferedWriter(new FileWriter(filePath))) { //write to file
+			File file = new File(filePath);
+			PrintWriter pw = new PrintWriter(file);
+			pw.print("");
+			pw.close();
 			for(Song s : songList) {
 				fw.write(s.toString()+"\n");
 			}
-			fw.write("\n");
 		} catch (IOException e) {
 			
 		}
