@@ -289,7 +289,8 @@ public class Controller {
 			PrintWriter pw = new PrintWriter(file);
 			pw.print("");
 			pw.close();
-			for(Song s : songList) {
+			for(int i=0;i<songList.size();i++) {
+				Song s=songList.get(i);
 				fw.write(s.toString()+"\n");
 			}
 		} catch (IOException e) {
