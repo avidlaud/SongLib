@@ -111,10 +111,17 @@ public class Controller {
 			listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
 				@Override
 				public void changed(ObservableValue<? extends Song> observable, Song oldVal, Song newVal) {
-					labelName.setText(listView.getSelectionModel().getSelectedItem().getName());
-					labelArtist.setText(listView.getSelectionModel().getSelectedItem().getArtist());
-					labelAlbum.setText(listView.getSelectionModel().getSelectedItem().getAlbum());
-					labelYear.setText(listView.getSelectionModel().getSelectedItem().getYear());
+					if(!songList.isEmpty()) {
+						if(listView.getSelectionModel().getSelectedItem() != null) {
+							labelName.setText(listView.getSelectionModel().getSelectedItem().getName());
+							labelArtist.setText(listView.getSelectionModel().getSelectedItem().getArtist());
+							labelAlbum.setText(listView.getSelectionModel().getSelectedItem().getAlbum());
+							labelYear.setText(listView.getSelectionModel().getSelectedItem().getYear());
+						}
+						else {
+							listView.getSelectionModel().select(0);
+						}
+					}
 					return;
 				}
 			});
@@ -145,8 +152,6 @@ public class Controller {
 		screenMap.remove(name);
 	}
 	public void activate(String name) {
-		System.out.println(screenMap.get(name));
-		//mainScene.setRoot(screenMap.get(name));
 		switch(name) {
 			case "addScene":
 				labelName.setVisible(false);
