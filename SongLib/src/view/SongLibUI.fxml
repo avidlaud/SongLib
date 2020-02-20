@@ -25,10 +25,10 @@
                   <Button fx:id="buttonAdd" layoutX="43.0" layoutY="287.0" mnemonicParsing="false" onAction="#addScreen" text="Add" />
                   <Button fx:id="buttonEdit" layoutX="125.0" layoutY="287.0" mnemonicParsing="false" onAction="#editScreen" text="Edit" />
                   <Button fx:id="buttonDelete" layoutX="202.0" layoutY="287.0" mnemonicParsing="false" onAction="#deleteScreen" text="Delete" />
-                  <TextField fx:id="textFieldName" layoutX="74.0" layoutY="55.0" />
-                  <TextField fx:id="textFieldArtist" layoutX="74.0" layoutY="97.0" />
-                  <TextField fx:id="textFieldAlbum" layoutX="74.0" layoutY="141.0" />
-                  <TextField fx:id="textFieldYear" layoutX="74.0" layoutY="187.0" />
+                  <TextField fx:id="textFieldName" layoutX="74.0" layoutY="55.0" promptText="Song Name" />
+                  <TextField fx:id="textFieldArtist" layoutX="74.0" layoutY="97.0" promptText="Artist"/>
+                  <TextField fx:id="textFieldAlbum" layoutX="74.0" layoutY="141.0" promptText="Album"/>
+                  <TextField fx:id="textFieldYear" layoutX="74.0" layoutY="187.0" promptText="Year"/>
                   <Button fx:id="buttonConfirmAdd" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#addConfirm" text="Confirm" />
                   <Button fx:id="buttonConfirmEdit" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#editConfirm" text="Confirm" />
                   <Button fx:id="buttonConfirmDelete" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#deleteConfirm" text="Confirm" />
