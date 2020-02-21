@@ -113,10 +113,10 @@ public class Controller {
 				public void changed(ObservableValue<? extends Song> observable, Song oldVal, Song newVal) {
 					if(!songList.isEmpty()) {
 						if(listView.getSelectionModel().getSelectedItem() != null) {
-							labelName.setText(listView.getSelectionModel().getSelectedItem().getName());
-							labelArtist.setText(listView.getSelectionModel().getSelectedItem().getArtist());
-							labelAlbum.setText(listView.getSelectionModel().getSelectedItem().getAlbum());
-							labelYear.setText(listView.getSelectionModel().getSelectedItem().getYear());
+							labelName.setText("Name: " + listView.getSelectionModel().getSelectedItem().getName());
+							labelArtist.setText("Artist: " + listView.getSelectionModel().getSelectedItem().getArtist());
+							labelAlbum.setText("Album: " + listView.getSelectionModel().getSelectedItem().getAlbum());
+							labelYear.setText("Year: " + listView.getSelectionModel().getSelectedItem().getYear());
 						}
 						else {
 							listView.getSelectionModel().select(0);
@@ -367,21 +367,21 @@ public class Controller {
 	@FXML
 	private void addConfirm(ActionEvent e) {
 		Song s=new Song();
-		String t = textFieldName.getText();
+		String t = textFieldName.getText().trim();
 		if(t.compareTo("")==0) {
 			return;
 		}
 		s.setName(t);
-		t = textFieldArtist.getText();
+		t = textFieldArtist.getText().trim();
 		if(t.compareTo("")==0) {
 			return;
 		}
 		s.setArtist(t);
-		t = textFieldAlbum.getText();
+		t = textFieldAlbum.getText().trim();
 		if(t.compareTo("")!=0) {
 			s.setAlbum(t);
 		}
-		t = textFieldYear.getText();
+		t = textFieldYear.getText().trim();
 		if(t.compareTo("")!=0 && isInt(t)) {
 			s.setYear(t);
 		}
