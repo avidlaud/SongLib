@@ -126,8 +126,18 @@ public class Controller {
 						if(listView.getSelectionModel().getSelectedItem() != null) {
 							labelName.setText("Name: " + listView.getSelectionModel().getSelectedItem().getName());
 							labelArtist.setText("Artist: " + listView.getSelectionModel().getSelectedItem().getArtist());
-							labelAlbum.setText("Album: " + listView.getSelectionModel().getSelectedItem().getAlbum());
-							labelYear.setText("Year: " + listView.getSelectionModel().getSelectedItem().getYear());
+							if(listView.getSelectionModel().getSelectedItem().getAlbum() != null) {
+								labelAlbum.setText("Album: " + (listView.getSelectionModel().getSelectedItem().getAlbum()));
+							}
+							else {
+								labelAlbum.setText("Album: ");
+							}
+							if(listView.getSelectionModel().getSelectedItem().getYear() != null) {
+								labelYear.setText("Year: " + (listView.getSelectionModel().getSelectedItem().getYear()));
+							}
+							else {
+								labelYear.setText("Year: ");
+							}
 						}
 						else {
 							listView.getSelectionModel().select(0);
