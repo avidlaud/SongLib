@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import view.Controller;
 
-public class App extends Application {
+public class SongLib extends Application {
 	Stage mainStage;
 	
 	@Override
