@@ -18,17 +18,17 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="labelName" layoutX="129.0" layoutY="59.0" text="Label" />
-                  <Label fx:id="labelArtist" layoutX="129.0" layoutY="101.0" text="Label" />
-                  <Label fx:id="labelAlbum" layoutX="129.0" layoutY="145.0" text="Label" />
-                  <Label fx:id="labelYear" layoutX="129.0" layoutY="191.0" text="Label" />
+                  <Label fx:id="labelName" layoutX="8.0" layoutY="59.0" prefHeight="17.0" prefWidth="280.0" text="Label" textAlignment="CENTER" />
+                  <Label fx:id="labelArtist" layoutX="8.0" layoutY="101.0" prefHeight="17.0" prefWidth="280.0" text="Label" textAlignment="CENTER" />
+                  <Label fx:id="labelAlbum" layoutX="8.0" layoutY="145.0" prefHeight="17.0" prefWidth="280.0" text="Label" textAlignment="CENTER" />
+                  <Label fx:id="labelYear" layoutX="8.0" layoutY="191.0" prefHeight="17.0" prefWidth="280.0" text="Label" textAlignment="CENTER" />
                   <Button fx:id="buttonAdd" layoutX="43.0" layoutY="287.0" mnemonicParsing="false" onAction="#addScreen" text="Add" />
                   <Button fx:id="buttonEdit" layoutX="125.0" layoutY="287.0" mnemonicParsing="false" onAction="#editScreen" text="Edit" />
                   <Button fx:id="buttonDelete" layoutX="202.0" layoutY="287.0" mnemonicParsing="false" onAction="#deleteScreen" text="Delete" />
                   <TextField fx:id="textFieldName" layoutX="74.0" layoutY="55.0" promptText="Song Name" />
-                  <TextField fx:id="textFieldArtist" layoutX="74.0" layoutY="97.0" promptText="Artist"/>
-                  <TextField fx:id="textFieldAlbum" layoutX="74.0" layoutY="141.0" promptText="Album"/>
-                  <TextField fx:id="textFieldYear" layoutX="74.0" layoutY="187.0" promptText="Year"/>
+                  <TextField fx:id="textFieldArtist" layoutX="74.0" layoutY="97.0" promptText="Artist" />
+                  <TextField fx:id="textFieldAlbum" layoutX="74.0" layoutY="141.0" promptText="Album" />
+                  <TextField fx:id="textFieldYear" layoutX="74.0" layoutY="187.0" promptText="Year" />
                   <Button fx:id="buttonConfirmAdd" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#addConfirm" text="Confirm" />
                   <Button fx:id="buttonConfirmEdit" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#editConfirm" text="Confirm" />
                   <Button fx:id="buttonConfirmDelete" layoutX="74.0" layoutY="287.0" mnemonicParsing="false" onAction="#deleteConfirm" text="Confirm" />
