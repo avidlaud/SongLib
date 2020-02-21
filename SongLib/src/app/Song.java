@@ -53,6 +53,10 @@ public class Song implements Comparable<Song>{
 		this.year = year;
 	}
 	
+	/**
+	 * Performs a case-insensitive comparison
+	 * Compares song name and then artist
+	 */
 	public int compareTo(Song s) {
 		if(this.name.toLowerCase().compareTo(s.getName().toLowerCase()) > 0) {
 			return 1;
@@ -65,11 +69,16 @@ public class Song implements Comparable<Song>{
 		}
 		return (this.artist.toLowerCase().compareTo(s.getArtist().toLowerCase()) > 0) ? 1:-1;	
 	}
+	
 	public String toString() {
 		String s = name + "-" + artist;
 		return s;
 	}
 	
+	/**
+	 * Constructs a string for storage of songs data in a text file
+	 * @return String containing song information
+	 */
 	public String writeToFile() {
 		String writeName = (name == null) ? "":name;
 		String writeArtist = (artist == null) ? "":artist;
