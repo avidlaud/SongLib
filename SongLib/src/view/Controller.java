@@ -97,6 +97,8 @@ public class Controller {
 		filePath = "src\\app\\songList.txt";
 		try(BufferedReader fr = new BufferedReader(new FileReader(filePath))) { //populate songList from file
 			String line;
+			
+			/* Read data from file and create a sorted list*/
 			while((line = fr.readLine()) != null) {
 				String[] data = new String[4];
 				data = line.split("\t",4);
@@ -112,9 +114,13 @@ public class Controller {
 				songList.add(s);
 			}
 			Collections.sort(songList);
+			
 			listView.setItems(songList);
 			listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Song>() {
 				@Override
+				/**
+				 * Display the selected song data
+				 */
 				public void changed(ObservableValue<? extends Song> observable, Song oldVal, Song newVal) {
 					if(!songList.isEmpty()) {
 						if(listView.getSelectionModel().getSelectedItem() != null) {
@@ -138,6 +144,9 @@ public class Controller {
 				selected = null;
 			}
 		} catch (IOException e) {
+			/**
+			 * If the songlist file does not exist, create it
+			 */
 			File file = new File(filePath);
 			try(BufferedWriter fw = new BufferedWriter(new FileWriter(filePath,true))) {
 				fw.write("");
@@ -147,15 +156,19 @@ public class Controller {
 			}
 		}
 	}
+	
 	public void setScene(Scene scene) {
 		mainScene=scene;
 	}
+	
 	public void addScreen(String name, Pane pane) {
 		screenMap.put(name,pane);
 	}
+	
 	public void removeScreen(String name) {
 		screenMap.remove(name);
 	}
+	
 	public void activate(String name) {
 		switch(name) {
 			case "addScene":
@@ -227,7 +240,13 @@ public class Controller {
 				buttonCancel.setVisible(false);
 		}
 	}
-	public boolean add(Song s) { //add a song to the list in alphabetical order by writing to the file 
+	
+	/**
+	 * Add a song to the song list, in alphabetical order
+	 * @param s The song to insert
+	 * @return True if successfully added, false otherwise
+	 */
+	public boolean add(Song s) {
 		if(read(s)) {
 			errorPop();
 			return false; //song already exists
@@ -245,6 +264,12 @@ public class Controller {
 		listView.getSelectionModel().select(songList.indexOf(s));
 		return true;
 	}
+	
+	/**
+	 * Delete a song from the list
+	 * @param s The song to delete
+	 * @return True if successfully deleted, false otherwise
+	 */
 	public boolean delete(Song s) { //removes target song from the songList, returns true if it exists and false if it wasnt in the list in the first place
 		if(songList == null || songList.isEmpty()) {
 			return false;
@@ -274,7 +299,14 @@ public class Controller {
 		}
 		return false;
 	}
-	public boolean edit(Song s, Song n) { //looks for s in the list and replaces it with n if it exists, returns false if s was not in the list already
+	
+	/**
+	 * Change the values of a song that already exists in the list
+	 * @param s The song to edit
+	 * @param n The new song values
+	 * @return Returns true if successfully edited, false otherwise
+	 */
+	public boolean edit(Song s, Song n) { 
 		if(songList == null || songList.isEmpty()) {
 			return false;
 		}
@@ -291,7 +323,13 @@ public class Controller {
 		write();
 		return true;
 	}
-	private boolean read(Song s) { //search the file to see if a song exists
+	
+	/**
+	 * Search the song list for a song
+	 * @param s The song to search for
+	 * @return True if found, false if not
+	 */
+	private boolean read(Song s) {
 		if(songList == null || songList.isEmpty()) {
 			return false;
 		}
@@ -302,21 +340,10 @@ public class Controller {
 		}
 		return false;
 	}
-	/*private void write() { //deletes the current file and creates a new one of the same name that is re-populated with data from the songList
-		File curList = new File(filePath);
-		curList.delete();
-		File file = new File(filePath);
-		if(songList==null || songList.isEmpty()) {
-			return;
-		}
-		try(BufferedWriter fw = new BufferedWriter(new FileWriter(filePath,true))) { //write to file
-			for(Song s : songList) {
-				fw.write(s.toString()+"\n");
-			}
-		} catch (IOException e) {
-			
-		}
-	}*/
+
+	/**
+	 * Write the current song list to the text file
+	 */
 	private void write() {
 		if(songList==null || songList.isEmpty()) {
 			return;
@@ -338,21 +365,24 @@ public class Controller {
 			
 		}
 	}
+	
 	@FXML
-	private void addScreen(ActionEvent e) { //should transition to a new scene when the add button is clicked
+	private void addScreen(ActionEvent e) {
 		textFieldName.setText("");
 		textFieldArtist.setText("");
 		textFieldAlbum.setText("");
 		textFieldYear.setText("");
 		activate("addScene");
 	}
+	
 	@FXML
-	private void deleteScreen(ActionEvent e) { //we also need a submit buttons for these scenes, which will then call add/edit/delete
+	private void deleteScreen(ActionEvent e) {
 		selected = listView.getSelectionModel().getSelectedItem();
 		if(selected!=null) {
 			activate("deleteScene");
 		}
 	}
+	
 	@FXML
 	private void editScreen(ActionEvent e) {
 		selected = listView.getSelectionModel().getSelectedItem();
@@ -365,10 +395,12 @@ public class Controller {
 			textFieldYear.setText(selected.getYear());
 		}
 	}
+	
 	@FXML
 	private void Cancel(ActionEvent e) {
 		activate("mainScene");
 	}
+	
 	@FXML
 	private void addConfirm(ActionEvent e) {
 		Song s=new Song();
@@ -393,6 +425,12 @@ public class Controller {
 		add(s); 
 		activate("mainScene");
 	}
+	
+	/**
+	 * Check if a string is a number - used to check if valid year
+	 * @param s String to check
+	 * @return True if number, false if not
+	 */
 	private boolean isInt(String s) {
 		if(s==null) {
 			return false;
@@ -404,11 +442,13 @@ public class Controller {
 		}
 		return true;
 	}
+	
 	@FXML
 	private void deleteConfirm(ActionEvent e) {
 		delete(selected);
 		activate("mainScene");
 	}
+	
 	@FXML
 	private void editConfirm(ActionEvent e) {
 		Song s=new Song();
@@ -433,7 +473,11 @@ public class Controller {
 		edit(editSong,s);
 		activate("mainScene");
 	}
-	private void errorPop() { //creates a pop up window to display an error message
+	
+	/**
+	 * Create error pop-up window for duplicate entries
+	 */
+	private void errorPop() {
 		Alert alert = new Alert(AlertType.ERROR, "The name and artist of the song you are attempting to create already exists in the library.", ButtonType.CLOSE);
 		alert.showAndWait();
 		if (alert.getResult() == ButtonType.CLOSE) {
