@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/app/songList.txt</name>
+			<type>1</type>
+			<location>C:/Users/avidl/git/SongLib/SongLib/src/app/songList.txt</location>
+		</link>
+	</linkedResources>
 </projectDescription>
