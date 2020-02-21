@@ -1,3 +1,8 @@
+/**
+ * Ken Erickson and David Lau
+ * CS213
+ */
+
 package app;
 
 public class Song implements Comparable<Song>{
