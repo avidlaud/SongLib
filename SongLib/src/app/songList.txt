@@ -2,7 +2,6 @@
 Name1	Artist1	Album1	2019
 nAME1	aRTist2	wad	2314
 Name1	Artist34	Album123	1230
-Name1	Artist9	awkjdl	2109
 Name5	Artist6	Album12	1230
 Name7	Artist2	Album2	2019
 Name7	Artist21	awdl	2109
